@@ -10,4 +10,6 @@ interface MainRouter : BaseRouter<List<PhotosBean>> {
     fun onSuccessGetRandomPhoto(photo: PhotosBean)
 
     fun onItemSelected(photo: PhotosBean?)
+
+    fun openUserProfile(username: String)
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="controller"
+            type="uz.dilmurodjonov_a.unsplash.ui.user_profile.item.PhotoItemUIController" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp">
+
+        <ImageView
+            loadImage="@{controller.imageUrl}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_black_5"
+            android:foreground="?selectableItemBackground"
+            android:onClick="@{()->controller.onItemClick()}"
+            android:scaleType="centerCrop"
+            tools:ignore="UnusedAttribute" />
+    </androidx.cardview.widget.CardView>
+</layout>

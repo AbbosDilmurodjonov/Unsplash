@@ -11,4 +11,6 @@
     <string name="twitter">Twitter</string>
     <string name="likes">Likes</string>
     <string name="instagram">Instagram</string>
+    <string name="followers">Followers</string>
+    <string name="follows">Follows</string>
 </resources>

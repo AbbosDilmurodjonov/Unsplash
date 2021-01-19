@@ -1,0 +1,372 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="controller"
+            type="uz.dilmurodjonov_a.unsplash.ui.user_profile.UserProfileUIController" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relativeToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/menu"
+                android:onClick="@{()->controller.onBackClick()}"
+                android:padding="4dp"
+                android:src="@drawable/ic_back"
+                app:tint="@color/light_black" />
+
+            <TextView
+                style="@style/TitleTextView"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/imageNotification"
+                android:layout_toEndOf="@id/imageMenu"
+                android:text="@{controller.name}"
+                android:visibility="invisible"
+                tools:text="Gilbert Kane" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageNotification"
+                loadUserImage="@{controller.userSmallImageUrl}"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/light_black_5"
+                android:contentDescription="@string/notification"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_notifications"
+                android:visibility="invisible"
+                app:shapeAppearanceOverlay="@style/circleImageView"
+                app:tint="@color/light_black" />
+
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/relativeToolbar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="16dp">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imageUserPhoto"
+                            loadUserImage="@{controller.userImageUrl}"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="64dp"
+                            android:background="@color/light_black_5"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:shapeAppearanceOverlay="@style/circleImageView" />
+
+
+                        <TextView
+                            android:id="@+id/textName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="4dp"
+                            android:layout_toEndOf="@id/imageUserPhoto"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{controller.name}"
+                            android:textAlignment="center"
+                            android:textColor="@color/light_black"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/imageUserPhoto"
+                            tools:ignore="SpUsage"
+                            tools:text="Gilbert Kane" />
+
+                        <TextView
+                            android:id="@+id/textFollows"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_toEndOf="@id/imageUserPhoto"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@string/follows"
+                            android:textAlignment="center"
+                            android:textColor="@color/light_black"
+                            android:textSize="16dp"
+                            app:layout_constraintEnd_toStartOf="@id/textFollowers"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textName"
+                            tools:ignore="SpUsage"
+                            tools:text="Follows" />
+
+                        <TextView
+                            android:id="@+id/textFollowers"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_toEndOf="@id/imageUserPhoto"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@string/followers"
+                            android:textAlignment="center"
+                            android:textColor="@color/light_black"
+                            android:textSize="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/textFollows"
+                            app:layout_constraintTop_toBottomOf="@id/textName"
+                            tools:ignore="SpUsage"
+                            tools:text="Follwers" />
+
+
+                        <TextView
+                            android:id="@+id/textFollowsCount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toEndOf="@id/imageUserPhoto"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{controller.followingCount}"
+                            android:textAlignment="center"
+                            android:textColor="@color/light_black"
+                            android:textSize="18dp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@id/textFollowers"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textFollows"
+                            tools:ignore="SpUsage"
+                            tools:text="1 235" />
+
+                        <TextView
+                            android:id="@+id/textFollwersCount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_toEndOf="@id/imageUserPhoto"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{controller.followersCount}"
+                            android:textAlignment="center"
+                            android:textColor="@color/light_black"
+                            android:textSize="18dp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/textFollows"
+                            app:layout_constraintTop_toBottomOf="@id/textFollowers"
+                            tools:ignore="SpUsage"
+                            tools:text="23 561" />
+
+                        <LinearLayout
+                            android:id="@+id/layoutInstagram"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textFollowsCount"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:id="@+id/imageInstagram"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginStart="24dp"
+                                android:contentDescription="@string/instagram"
+                                android:src="@drawable/instagram"
+                                android:visibility="@{controller.hasInstagram?View.VISIBLE:View.GONE}"
+                                app:tint="@color/light_black" />
+
+                            <TextView
+                                android:id="@+id/textInstagram"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="24dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{controller.instagram}"
+                                android:textColor="@color/light_black"
+                                android:textSize="16dp"
+                                android:textStyle="italic"
+                                android:visibility="@{controller.hasInstagram?View.VISIBLE:View.GONE}"
+                                tools:ignore="SpUsage"
+                                tools:text="Gilbert Kane" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/layoutTwitter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layoutInstagram"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:id="@+id/imageTwitter"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginStart="24dp"
+                                android:contentDescription="@string/twitter"
+                                android:src="@drawable/twitter"
+                                android:visibility="@{controller.hasTwitter?View.VISIBLE:View.INVISIBLE}"
+                                app:tint="@color/light_black" />
+
+                            <TextView
+                                android:id="@+id/textTwitter"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="24dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{controller.twitter}"
+                                android:textColor="@color/light_black"
+                                android:textSize="16dp"
+                                android:textStyle="italic"
+                                tools:ignore="SpUsage"
+                                tools:text="Gilbert Kane" />
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/txt1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_toEndOf="@id/imageUserPhoto"
+                            android:drawablePadding="4dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{controller.totalLikes}"
+                            android:textAlignment="center"
+                            android:textColor="@color/light_black"
+                            android:textSize="16dp"
+                            app:drawableTint="@color/light_black"
+                            app:drawableTopCompat="@drawable/ic_favorite_black"
+                            app:layout_constraintEnd_toStartOf="@id/txt2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layoutTwitter"
+                            tools:ignore="SpUsage"
+                            tools:text="123 005" />
+
+                        <TextView
+                            android:id="@+id/txt2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:layout_toEndOf="@id/imageUserPhoto"
+                            android:drawablePadding="4dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{controller.totalPhotos}"
+                            android:textAlignment="center"
+                            android:textColor="@color/light_black"
+                            android:textSize="16dp"
+                            app:drawableTint="@color/light_black"
+                            app:drawableTopCompat="@drawable/ic_image_48"
+                            app:layout_constraintEnd_toStartOf="@id/txt3"
+                            app:layout_constraintStart_toEndOf="@id/txt1"
+                            app:layout_constraintTop_toBottomOf="@id/layoutTwitter"
+                            tools:ignore="SpUsage"
+                            tools:text="123" />
+
+                        <TextView
+                            android:id="@+id/txt3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_toEndOf="@id/imageUserPhoto"
+                            android:drawablePadding="4dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{controller.totalDownload}"
+                            android:textAlignment="center"
+                            android:textColor="@color/light_black"
+                            android:textSize="16dp"
+                            app:drawableTint="@color/light_black"
+                            app:drawableTopCompat="@drawable/ic_download"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/txt2"
+                            app:layout_constraintTop_toBottomOf="@id/layoutTwitter"
+                            tools:ignore="SpUsage"
+                            tools:text="133 321" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerPhotos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:id="@+id/progressLoad"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-12dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/light_black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/relativeToolbar"
+            tools:ignore="UnusedAttribute" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

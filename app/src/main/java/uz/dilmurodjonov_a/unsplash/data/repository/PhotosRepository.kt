@@ -10,13 +10,20 @@ import uz.dilmurodjonov_a.unsplash.data.repository.base.BaseRepository
  */
 class PhotosRepository(application: Application) : BaseRepository(application) {
 
-    fun photosList(page: Int, perCount: Int, apiCallback: ApiCallback<List<PhotosBean>>) {
+    fun photosList(page: Int, perCount: Int, apiCallback: ApiCallback<List<PhotosBean>>) =
         request(api.getPhotoList(page, perCount), apiCallback)
-    }
 
 
-    fun randomPhoto(apiCallback: ApiCallback<PhotosBean>) {
+    fun userPhotosList(
+        username: String,
+        page: Int,
+        perCount: Int,
+        apiCallback: ApiCallback<List<PhotosBean>>
+    ) = request(api.getUserPhotoList(username, page, perCount), apiCallback)
+
+
+    fun randomPhoto(apiCallback: ApiCallback<PhotosBean>) =
         request(api.getRandomPhoto(), apiCallback)
-    }
+
 
 }

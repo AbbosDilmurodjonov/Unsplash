@@ -15,6 +15,7 @@ import uz.dilmurodjonov_a.unsplash.databinding.FragmentMainBinding
 import uz.dilmurodjonov_a.unsplash.databinding.ItemPhotoBinding
 import uz.dilmurodjonov_a.unsplash.ui._base.BaseFragment
 import uz.dilmurodjonov_a.unsplash.ui.main.item.PhotoItemUIController
+import uz.dilmurodjonov_a.unsplash.ui.user_profile.UserProfileFragment
 
 
 /**
@@ -49,7 +50,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val controller = MainUIController()
+        val controller = MainUIController(this)
         databinding?.controller = controller
 
         databinding?.recyclerPhotos?.adapter = adapter
@@ -82,6 +83,14 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(),
 
     override fun onItemSelected(photo: PhotosBean?) {
         databinding?.controller?.bean = photo
+    }
+
+    override fun openUserProfile(username: String) {
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, UserProfileFragment.newInstance(username))
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun setLoading(b: Boolean) {

@@ -8,7 +8,7 @@ import uz.dilmurodjonov_a.unsplash.data.bean.PhotosBean
 /**
  * Created by Abbos Dilmurodjonov (AyDee) on 11.01.2021.
  */
-class MainUIController : BaseObservable() {
+class MainUIController(private val router: MainRouter) : BaseObservable() {
 
     var bean: PhotosBean? = null
         set(value) {
@@ -45,7 +45,7 @@ class MainUIController : BaseObservable() {
     }
 
     fun onUserInfoClick() {
-        //TODO goto-> User Profile Fragment
+        bean?.user?.username?.let { router.openUserProfile(it) }
     }
 
 
