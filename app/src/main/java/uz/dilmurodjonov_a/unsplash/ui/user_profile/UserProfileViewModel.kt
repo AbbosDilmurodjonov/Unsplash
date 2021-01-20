@@ -45,8 +45,8 @@ class UserProfileViewModel(application: Application) :
         userRepository.getUser(username, object : ApiCallback<UserBean?> {
             override fun onSuccess(response: UserBean?) {
                 getRouter()?.apply {
-                    setLoading(false)
                     onSuccessGetUser(response)
+                    getPhotoList(username, page = 1)
                 }
             }
 

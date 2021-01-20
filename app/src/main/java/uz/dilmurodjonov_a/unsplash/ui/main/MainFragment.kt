@@ -60,7 +60,11 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(),
             RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollHorizontally(1) && page != 0) {
+                if (!recyclerView.canScrollHorizontally(1)
+                    && newState == RecyclerView.SCROLL_STATE_IDLE
+                    && page != 0
+                    && databinding?.progressLoad?.visibility != View.VISIBLE
+                ) {
                     viewModel?.getPhotoList(++page, pagePerCount)
                 }
             }
@@ -74,7 +78,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(),
         )
 
         viewModel!!.setRouter(this)
-        Handler(Looper.getMainLooper()).postDelayed({ viewModel?.getPhotoList(++page) }, 300)
+        page = 1
+        Handler(Looper.getMainLooper()).postDelayed({ viewModel?.getPhotoList(page) }, 300)
     }
 
     override fun onSuccessGetRandomPhoto(photo: PhotosBean) {
@@ -99,7 +104,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(),
     }
 
     override fun onSuccess(response: List<PhotosBean>) {
-        databinding?.relativeMain?.visibility = View.VISIBLE
         if (page == 1) {
             adapter.setList(response.toMutableList())
             databinding?.controller?.bean = response[0]
@@ -109,6 +113,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(),
 
     override fun onError(errorMsg: String?) {
         Toast.makeText(requireContext(), "Error: $errorMsg", Toast.LENGTH_SHORT).show()
+        page--
     }
 
     override fun setController(dataBinding: ViewDataBinding?) {

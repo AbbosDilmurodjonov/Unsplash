@@ -18,6 +18,9 @@ class UserProfileUIController(private val router: UserProfileRouter) : BaseObser
     fun getName(): String = user?.name ?: ""
 
     @Bindable
+    fun getUsername(): String = user?.username ?: ""
+
+    @Bindable
     fun getUserSmallImageUrl(): String = user?.profile_image?.medium ?: ""
 
     @Bindable
@@ -33,7 +36,7 @@ class UserProfileUIController(private val router: UserProfileRouter) : BaseObser
     fun getTotalLikes(): String = (user?.total_likes ?: 0).toString()
 
     @Bindable
-    fun getTotalPhotos(): String = (user?.total_likes ?: 0).toString()
+    fun getTotalPhotos(): String = (user?.total_photos ?: 0).toString()
 
     @Bindable
     fun getTotalDownload(): String = (user?.downloads ?: 0).toString()

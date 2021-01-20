@@ -1,13 +1,13 @@
 package uz.dilmurodjonov_a.unsplash.ui.user_profile
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import uz.dilmurodjonov_a.unsplash.R
 import uz.dilmurodjonov_a.unsplash.adapter.RecyclerAdapter
 import uz.dilmurodjonov_a.unsplash.data.bean.PhotosBean
 import uz.dilmurodjonov_a.unsplash.data.bean.UserBean
@@ -39,13 +39,14 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding, UserProfile
     private var page: Int = 0
 
 
-    override val layoutId: Int = uz.dilmurodjonov_a.unsplash.R.layout.fragment_user_profile
+    override val layoutId: Int = R.layout.fragment_user_profile
     override val viewModelClass: Class<UserProfileViewModel> = UserProfileViewModel::class.java
     private var username: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         username = arguments?.getString(USERNAME_KEY)
+        adapter = RecyclerAdapter(R.layout.item_user_photo, this)
 
     }
 
@@ -71,21 +72,33 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding, UserProfile
         viewModel?.setRouter(this)
 
         username?.let {
+            page = 1
             viewModel?.getUser(it)
 
-            Handler(Looper.getMainLooper()).postDelayed(
-                { viewModel?.getPhotoList(it, page = 1) },
-                300
-            )
-            databinding?.recyclerPhotos?.addOnScrollListener(object :
-                RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    super.onScrollStateChanged(recyclerView, newState)
-                    if (!recyclerView.canScrollVertically(1) && page != 0) {
+            databinding?.nestedScroll?.setOnScrollChangeListener(
+                NestedScrollView.OnScrollChangeListener
+                { v, _, scrollY, _, _ ->
+                    Log.d(
+                        "Hello",
+                        "onViewCreated: $scrollY - ${databinding?.nestedScroll?.height?.minus(60)}"
+                    )
+
+                    if (scrollY >= (databinding?.textFollows?.y?.toInt() ?: 0)) {
+                        databinding?.titleTextName?.visibility = View.VISIBLE
+                        databinding?.imageNotification?.visibility = View.VISIBLE
+                    } else {
+                        databinding?.titleTextName?.visibility = View.INVISIBLE
+                        databinding?.imageNotification?.visibility = View.INVISIBLE
+                    }
+
+                    if (scrollY >= Math.abs(v.measuredHeight - v.getChildAt(0).measuredHeight)
+                            .minus(120)
+                        && databinding?.progressLoad?.visibility != View.VISIBLE
+                        && page != 0
+                    ) {
                         viewModel?.getPhotoList(it, ++page, pagePerCount)
                     }
-                }
-            })
+                })
         }
 
 
@@ -111,6 +124,7 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding, UserProfile
 
     override fun onError(errorMsg: String?) {
         Toast.makeText(requireContext(), "Error: $errorMsg", Toast.LENGTH_SHORT).show()
+        page--
     }
 
     override fun setController(dataBinding: ViewDataBinding?) {

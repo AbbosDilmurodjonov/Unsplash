@@ -39,6 +39,7 @@
                 app:tint="@color/light_black" />
 
             <TextView
+                android:id="@+id/titleTextName"
                 style="@style/TitleTextView"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/imageNotification"
@@ -56,19 +57,29 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@color/light_black_5"
                 android:contentDescription="@string/notification"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_notifications"
                 android:visibility="invisible"
-                app:shapeAppearanceOverlay="@style/circleImageView"
-                app:tint="@color/light_black" />
+                app:shapeAppearanceOverlay="@style/circleImageView" />
 
+            <ProgressBar
+                android:id="@+id/progressLoad"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="-4dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/light_black"
+                tools:ignore="UnusedAttribute" />
         </RelativeLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScroll"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +105,7 @@
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginTop="64dp"
+                            android:layout_marginTop="32dp"
                             android:background="@color/light_black_5"
                             android:scaleType="centerCrop"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -126,21 +137,42 @@
                             tools:text="Gilbert Kane" />
 
                         <TextView
+                            android:id="@+id/textUserName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="4dp"
+                            android:layout_toEndOf="@id/imageUserPhoto"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{controller.username}"
+                            android:textAlignment="center"
+                            android:textColor="@color/light_black"
+                            android:textSize="18dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textName"
+                            tools:ignore="SpUsage"
+                            tools:text="Gilbert Kane" />
+
+                        <TextView
                             android:id="@+id/textFollows"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="24dp"
                             android:layout_toEndOf="@id/imageUserPhoto"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text="@string/follows"
                             android:textAlignment="center"
                             android:textColor="@color/light_black"
-                            android:textSize="16dp"
+                            android:textSize="14dp"
                             app:layout_constraintEnd_toStartOf="@id/textFollowers"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/textName"
+                            app:layout_constraintTop_toBottomOf="@id/textUserName"
                             tools:ignore="SpUsage"
                             tools:text="Follows" />
 
@@ -148,7 +180,7 @@
                             android:id="@+id/textFollowers"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="24dp"
                             android:layout_marginEnd="24dp"
                             android:layout_toEndOf="@id/imageUserPhoto"
                             android:ellipsize="end"
@@ -156,10 +188,10 @@
                             android:text="@string/followers"
                             android:textAlignment="center"
                             android:textColor="@color/light_black"
-                            android:textSize="16dp"
+                            android:textSize="14dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/textFollows"
-                            app:layout_constraintTop_toBottomOf="@id/textName"
+                            app:layout_constraintTop_toBottomOf="@id/textUserName"
                             tools:ignore="SpUsage"
                             tools:text="Follwers" />
 
@@ -176,7 +208,7 @@
                             android:text="@{controller.followingCount}"
                             android:textAlignment="center"
                             android:textColor="@color/light_black"
-                            android:textSize="18dp"
+                            android:textSize="16dp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toStartOf="@id/textFollowers"
                             app:layout_constraintStart_toStartOf="parent"
@@ -196,7 +228,7 @@
                             android:text="@{controller.followersCount}"
                             android:textAlignment="center"
                             android:textColor="@color/light_black"
-                            android:textSize="18dp"
+                            android:textSize="16dp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/textFollows"
@@ -208,7 +240,7 @@
                             android:id="@+id/layoutInstagram"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="24dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             app:layout_constraintStart_toStartOf="parent"
@@ -217,8 +249,8 @@
 
                             <ImageView
                                 android:id="@+id/imageInstagram"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
                                 android:layout_marginStart="24dp"
                                 android:contentDescription="@string/instagram"
                                 android:src="@drawable/instagram"
@@ -235,7 +267,7 @@
                                 android:maxLines="1"
                                 android:text="@{controller.instagram}"
                                 android:textColor="@color/light_black"
-                                android:textSize="16dp"
+                                android:textSize="14dp"
                                 android:textStyle="italic"
                                 android:visibility="@{controller.hasInstagram?View.VISIBLE:View.GONE}"
                                 tools:ignore="SpUsage"
@@ -256,12 +288,12 @@
 
                             <ImageView
                                 android:id="@+id/imageTwitter"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
                                 android:layout_marginStart="24dp"
                                 android:contentDescription="@string/twitter"
                                 android:src="@drawable/twitter"
-                                android:visibility="@{controller.hasTwitter?View.VISIBLE:View.INVISIBLE}"
+                                android:visibility="@{controller.hasTwitter?View.VISIBLE:View.GONE}"
                                 app:tint="@color/light_black" />
 
                             <TextView
@@ -274,7 +306,8 @@
                                 android:maxLines="1"
                                 android:text="@{controller.twitter}"
                                 android:textColor="@color/light_black"
-                                android:textSize="16dp"
+                                android:textSize="14dp"
+                                android:visibility="@{controller.hasTwitter?View.VISIBLE:View.GONE}"
                                 android:textStyle="italic"
                                 tools:ignore="SpUsage"
                                 tools:text="Gilbert Kane" />
@@ -286,7 +319,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
-                            android:layout_marginTop="24dp"
+                            android:layout_marginTop="32dp"
                             android:layout_toEndOf="@id/imageUserPhoto"
                             android:drawablePadding="4dp"
                             android:ellipsize="end"
@@ -307,7 +340,7 @@
                             android:id="@+id/txt2"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="24dp"
+                            android:layout_marginTop="32dp"
                             android:layout_toEndOf="@id/imageUserPhoto"
                             android:drawablePadding="4dp"
                             android:ellipsize="end"
@@ -328,7 +361,7 @@
                             android:id="@+id/txt3"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="24dp"
+                            android:layout_marginTop="32dp"
                             android:layout_marginEnd="24dp"
                             android:layout_toEndOf="@id/imageUserPhoto"
                             android:drawablePadding="4dp"
@@ -351,22 +384,17 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerPhotos"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    android:paddingStart="16dp"
+                    android:paddingTop="24dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="24dp" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 
-        <ProgressBar
-            android:id="@+id/progressLoad"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-12dp"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/light_black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/relativeToolbar"
-            tools:ignore="UnusedAttribute" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

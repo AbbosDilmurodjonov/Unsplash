@@ -1,5 +1,6 @@
 package uz.dilmurodjonov_a.unsplash.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -15,6 +16,7 @@ class RecyclerAdapter<T>(val layoutId: Int, val listener: AdapterListener<T>) :
     private var list: MutableList<T>? = null
 
     fun setList(list: MutableList<T>?) {
+        Log.d("Hello", "setList: ${list?.size}")
         if (this.list != null)
             notifyItemRangeRemoved(0, this.list!!.size)
 
