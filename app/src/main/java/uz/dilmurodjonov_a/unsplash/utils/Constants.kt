@@ -8,6 +8,6 @@ interface Constants {
         const val SERVER_URL = "https://api.unsplash.com/"
 
         //TODO SET YOUR_ACCES_KEY
-        const val ACCESS_KEY = "0E3IaiH5I6fLQ9yawqxwcAZettKuYVMLPI3GZTsGEBM"
+        const val ACCESS_KEY = "YOUR_ACCES_KEY"
     }
 }
